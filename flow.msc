@@ -1,0 +1,50 @@
+msc {
+  # options - separate with , end with ;
+  #
+  # arcgradient=20, # slopes the arcs.
+  # hscale="0.8", # horizontally squeezes or stretches the chart
+  # width="600", # sets the maximum width of the chart (pixels).
+  #              # xù and msgenny also allow the value 'auto' - it scales
+  #              # rendered svg's to maximum available width.
+  # watermark="a watermark", # adds a watermark (xù only!)
+  wordwraparcs=on; # automatically wrap labels on arcs. Default: off
+
+  # entities
+  #
+  # possible attributes
+  #   label
+  #   textcolor, textbgcolor, linecolor # as advertised
+  #
+  # these color the arcs departing from the entity:
+  #   arctextcolor, arctextbgcolor, arclinecolor
+  #
+
+  usr [label="User"],
+  ser [label="Service"],
+  appr [label= "Approvals Canister"],
+  ledg [label="Ldeger"];
+
+  # arcs
+  #
+  # attributes:
+  #   label, textcolor, textbgcolor, linecolor # as advertised
+  #   arcskip # arc starts here, ends the specified amount
+  #           # of lines lower.
+  #           # use e.g. arcskip="1" to end on the next line.
+  #
+  # arc types: ->, =>, =>>, >>, -x, :>,
+  #            <->, <=>, <<=>>, <<>>, <:>
+  #            --, ::, ..
+  #            note, box, abox, rbox
+
+  usr => ser [label="connect wallet"];
+  usr => appr [label="dapp code: request approval account"];
+  appr => usr [label="destination account info"];
+  usr => ledg [label="transaction for approval amount + fee(s)"];
+  usr => ser [label="send lock_reciept"];
+  ser => ledg [label="verify approved amount"];
+  usr box ledg [label="later"];
+  usr => ser [label="perform some action"];
+  ser => appr [label="transfer from"];
+  appr => ledg [label="move to service account"];
+}
